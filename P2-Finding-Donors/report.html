@@ -13068,25 +13068,30 @@ $$ F_{\beta} = (1 + \beta^2) \cdot \frac{precision \cdot recall}{\left( \beta^2 
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: The three supervised models that are appropriate for this problem are : -- Logistic Regression -- Support Vector Machines(SVM) -- Ensemble Methods(RandomForest)</strong></p>
-<p><strong>1) Logistic Regression :</strong></p>
-<p>1.1) Logistic Regression can be used to predict for 'Credit Risk Analysis'. It can be used to predict for which party a person is going to vote for.It can even be used to predict wheter a student will get an admission to a college or not based on a number of criteria.
-(Sources: <a href="https://www.researchgate.net/post/How_is_logistic_regression_used_What_conditions_and_types_of_variables_should_be_used">https://www.researchgate.net/post/How_is_logistic_regression_used_What_conditions_and_types_of_variables_should_be_used</a>, Quora, Google)</p>
-<p>1.2) Advantages of Logistic Regression :</p>
+<p><strong>1) Naive Bayes :</strong></p>
+<p>1.1) A classical use case for Naive Bayes is document classification: Determining whether a given (text) document corresponds to one or more categories. In the text case, the features used might be the presence or absence of key words. More examples can be:</p>
 <ul>
-<li>You can use more than one explanatory variable (dependent variable) and those can either be dichotomous, ordinal, or continuous.</li>
-<li>It helps to remove the 'confounding effect'.</li>
-<li>It does not need a linear relationship between the dependent and independent variables. Logistic regression can handle all sorts of relationships, because it applies a non-linear log transformation to the predicted odds ratio.</li>
-<li>The independent variables do not need to be metric (interval or ratio scaled).</li>
-<li>Logistic Regression performs well when features are roughly linear and the problem is likely to be linearly separable.</li>
+<li>To mark an email as spam, or not spam ?</li>
+<li>Classify a news article about technology, politics, or sports ?</li>
+<li>Check a piece of text expressing positive emotions, or negative emotions?</li>
+<li>Also used for face recognition softwares
+(Sources: <a href="https://www.quora.com/In-what-real-world-applications-is-Naive-Bayes-classifier-used">https://www.quora.com/In-what-real-world-applications-is-Naive-Bayes-classifier-used</a>, Google)</li>
 </ul>
-<p>1.3) Disadvantages of Logistic Regression :</p>
+<p>1.2) Advantages of Naive Bayes :</p>
 <ul>
-<li>Binary logistic regression requires the dependent variable to be binary and ordinal logistic regression requires the dependent variable to be ordinal.</li>
-<li>Linearity test is required on a non-binomial dependent variable before including it in the model.</li>
-<li>It combines both binomial and normal distribution which can cause problems sometimes.</li>
-<li>Logistic Regression performs poorly if the features are highly correlated.</li>
+<li>Super simple, you're just doing a bunch of counts. </li>
+<li>If the NB conditional independence assumption actually holds, a Naive Bayes classifier will converge quicker than discriminative models like logistic regression, so you need less training data. </li>
+<li>Even if the NB assumption doesn't hold, a NB classifier still often performs surprisingly well in practice. </li>
+<li>A good bet if you want to do some kind of semi-supervised learning, or want something embarrassingly simple that performs pretty well.
+<img src="http://images.slideplayer.com/20/6218806/slides/slide_15.jpg" alt="Alt"></li>
 </ul>
-<p>1.4) Logistic Regression can be applied to our data as it can be seen thet the features are not so highly correlated. Also, the outcome is a binomial distribution.</p>
+<p>1.3) Disadvantages of Naive Bayes :</p>
+<ul>
+<li>The first disadvantage is that the Naive Bayes classifier makes a very strong assumption on the shape of your data distribution, i.e. any two features are independent given the output class. Due to this, the result can be (potentially) very bad - hence, a “naive” classifier. This is not as terrible as people generally think, because the NB classifier can be optimal even if the assumption is violated, and its results can be good even in the case of sub-optimality.</li>
+<li>Another problem happens due to data scarcity. For any possible value of a feature, you need to estimate a likelihood value by a frequentist approach. This can result in probabilities going towards 0 or 1, which in turn leads to numerical instabilities and worse results. In this case, you need to smooth in some way your probabilities (e.g. as in sklearn [1]), or to impose some prior on your data, however you may argue that the resulting classifier is not naive anymore.</li>
+<li>A third problem arises for continuous features. It is common to use a binning procedure to make them discrete, but if you are not careful you can throw away a lot of information. Another possibility is to use Gaussian distributions for the likelihoods.</li>
+</ul>
+<p>1.4) Naive Bayes can be applied to our data as it can be seen that the training set is small, high bias/low variance.</p>
 <p><strong>2) Support Vector Machines(SVM) :</strong></p>
 <p>2.1) SVM is used in financial industries in financial time series forecasting. (Source : <a href="http://www.svms.org/finance/">http://www.svms.org/finance/</a>)</p>
 <p>2.2) Advantages of SVM:</p>
@@ -13180,7 +13185,7 @@ In the code block below, you will need to implement the following:</p>
     
     <span class="c"># TODO: Fit the learner to the training data using slicing with &#39;sample_size&#39;</span>
     <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> <span class="c"># Get start time</span>
-    <span class="n">learner</span> <span class="o">=</span> <span class="n">learner</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">learner</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">sample_size</span><span class="p">,:],</span> <span class="n">y_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">sample_size</span><span class="p">])</span>
     <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> <span class="c"># Get end time</span>
     
     <span class="c"># TODO: Calculate the training time</span>
@@ -13887,8 +13892,8 @@ kiRJkiSF/w+g4W2N8PAjrwAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Answer: The model chosen for the prediction was Random Forest.
-Random forests also known as Ensemble method is a way of averaging multiple deep decision trees, trained on different parts of the same training set, with the goal of overcoming over-fitting(Overfitting occurs when the model is excessively complex leading very poor performance on unseen dataset) problem of individual decision tree. For instance, a Random Forest might contain 10 Decision Trees. In Decision Trees, the population or sample is splitted into two or more homogeneous sets based on the most significant splitter / differentiator in input variables. Each Decision Tree receives a different subset of data from the training dataset, so each will be slightly different and predict slightly differently. To recieve the predictions from the whole forest, the predictions of the trees are averaged out in case of regression and voting in case of classification. The main principle behind ensemble methods is that a group of “weak learners” can come together to form a “strong learner” where weak learners are decision trees.</strong></p>
+<p><strong>Answer:</strong> The model chosen for the prediction was Random Forest.
+Random forests also known as Ensemble method is a way of averaging multiple deep decision trees, trained on different parts of the same training set, with the goal of overcoming over-fitting(Overfitting occurs when the model is excessively complex leading very poor performance on unseen dataset) problem of individual decision tree. For instance, a Random Forest might contain 10 Decision Trees. In Decision Trees, the population or sample is splitted into two or more homogeneous sets based on the most significant splitter / differentiator in input variables. Each Decision Tree receives a different subset of data from the training dataset, so each will be slightly different and predict slightly differently. To recieve the predictions from the whole forest, the predictions of the trees are averaged out in case of regression and voting in case of classification. The main principle behind ensemble methods is that a group of “weak learners” can come together to form a “strong learner” where weak learners are decision trees.</p>
 <p>Random Forest Steps :</p>
 <ul>
 <li>Take different subset of training samples</li>
@@ -13896,6 +13901,14 @@ Random forests also known as Ensemble method is a way of averaging multiple deep
 <li>For classification task, The example to be predicted would pass through each decision tree(which was build on each sample of the training dataset)and we will get the predicted class by each decision classifier and finally the class which got the highest vote from the decision tree classifier would be the final predicted class.</li>
 <li>For regression task, the process follows the same as described above except that the final predicted value would be average of all the values predicted by individual decision trees.</li>
 </ul>
+<p>Decision tree is a type of supervised learning algorithm (having a pre-defined target variable) that is mostly used in classification problems. It works for both categorical and continuous input and output variables. In this technique, we split the population or sample into two or more homogeneous sets (or sub-populations) based on most significant splitter / differentiator in input variables.
+<img src="https://www.analyticsvidhya.com/wp-content/uploads/2016/04/dt.png" alt="Alt"></p>
+<p>Example:-</p>
+<p>Let’s say we have a sample of 30 students with three variables Gender (Boy/ Girl), Class( IX/ X) and Height (5 to 6 ft). 15 out of these 30 play cricket in leisure time. Now, I want to create a model to predict who will play cricket during leisure period? In this problem, we need to segregate students who play cricket in their leisure time based on highly significant input variable among all three.</p>
+<p>This is where decision tree helps, it will segregate the students based on all values of three variable and identify the variable, which creates the best homogeneous sets of students (which are heterogeneous to each other). In the snapshot below, you can see that variable Gender is able to identify best homogeneous sets compared to the other two variables.</p>
+<p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/01/Test.png" alt="Alt"></p>
+<p>As mentioned above, decision tree identifies the most significant variable and it’s value that gives best homogeneous sets of population. Now the question which arises is, how does it identify the variable and the split? To do this, decision tree uses various algorithms, which we will shall discuss in the following section.</p>
+<p>If you want to dive in more, here is the reference <a href="http://www.saedsayad.com/decision_tree.htm">http://www.saedsayad.com/decision_tree.htm</a>, <a href="https://www.analyticsvidhya.com/blog/2016/04/complete-tutorial-tree-based-modeling-scratch-in-python/#one">https://www.analyticsvidhya.com/blog/2016/04/complete-tutorial-tree-based-modeling-scratch-in-python/#one</a></p>
 
 </div>
 </div>
@@ -14564,7 +14577,7 @@ F-score on testing data: 0.7289
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Answer:</strong> The final model's F-score and accuracy score on the reduced data using only five features is better compared to the model with all the features. Since running time(training and prediction) is not at all a concern in case of Random forest, we can chose to use either all training data or reduced data.</p>
+<p><strong>Answer:</strong> The final model's F-score and accuracy score on the reduced data using only five features is better compared to the model with all the features. Since running time(training and prediction) is not at all a concern in case of Random forest, we can choose to use either all training data or reduced data, with a small data set such as the one we are using, but this is not always the case. We shoud use the reduced data as we would have less features to traverse upon and this will enhance the speed of processing that is what I think</p>
 
 </div>
 </div>
