@@ -93,15 +93,15 @@ class Simulator(object):
             # Set log files
             if a.learning:
                 if self.optimized: # Whether the user is optimizing the parameters and decay functions
-                    self.log_filename = os.path.join("logs", "sim_improved-learning.csv")
-                    self.table_filename = os.path.join("logs","sim_improved-learning.txt")
+                    self.log_filename = os.path.join("/home/yatingupta/Documents/repo/Machine-Learning-Nanodegree/P4-Training-a-Smart-Cab/logs", "sim_improved-learning.csv")
+                    self.table_filename = os.path.join("/home/yatingupta/Documents/repo/Machine-Learning-Nanodegree/P4-Training-a-Smart-Cab/logs","sim_improved-learning.txt")
                 else: 
-                    self.log_filename = os.path.join("logs", "sim_default-learning.csv")
-                    self.table_filename = os.path.join("logs","sim_default-learning.txt")
+                    self.log_filename = os.path.join("/home/yatingupta/Documents/repo/Machine-Learning-Nanodegree/P4-Training-a-Smart-Cab/logs", "sim_default-learning.csv")
+                    self.table_filename = os.path.join("/home/yatingupta/Documents/repo/Machine-Learning-Nanodegree/P4-Training-a-Smart-Cab/logs","sim_default-learning.txt")
 
                 self.table_file = open(self.table_filename, 'wb')
             else:
-                self.log_filename = os.path.join("logs", "sim_no-learning.csv")
+                self.log_filename = os.path.join("/home/yatingupta/Documents/repo/Machine-Learning-Nanodegree/P4-Training-a-Smart-Cab/logs", "sim_no-learning.csv")
             
             self.log_fields = ['trial', 'testing', 'parameters', 'initial_deadline', 'final_deadline', 'net_reward', 'actions', 'success']
             self.log_file = open(self.log_filename, 'wb')
